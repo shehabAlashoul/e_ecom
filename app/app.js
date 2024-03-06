@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import Stripe from "stripe";
 import express from "express";
 import morgan from "morgan";
 import { v2 as cloudinary } from "cloudinary";
