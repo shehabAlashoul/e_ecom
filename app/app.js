@@ -32,7 +32,7 @@ const application = (app) => {
       switch (event.type) {
         case "checkout.session.completed":
           const data = event.data.object;
-          console.log(data);
+          console.log({data});
           break;
         default:
           console.log(`Unhandled event type ${event.type}`);

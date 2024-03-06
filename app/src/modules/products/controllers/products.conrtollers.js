@@ -7,23 +7,23 @@ import productModel from "../models/product.model.js";
 export const addProductWithImages = () =>
   catchAsyncError(async (req, res, next) => {
     const product = await productModel.create({
-     ...req.body,
+      ...req.body,
       created_by: req.user._id,
     });
     if (req.files?.images)
-    await Promise.all(
-      req.files.images.map(async (file) => {
-        try {
-          const image = await makeImage(file.path);
-          await imageOnProductModel.create({
-            image_id: image._id,
-            product_id: product._id,
-          });
-        } catch (error) {
-          return next(error);
-        }
-      })
-    );
+      await Promise.all(
+        req.files.images.map(async (file) => {
+          try {
+            const image = await makeImage(file.path);
+            await imageOnProductModel.create({
+              image_id: image._id,
+              product_id: product._id,
+            });
+          } catch (error) {
+            return next(error);
+          }
+        })
+      );
     res.status(201).json({
       message: `added product with ${req.files.images.length} images`,
     });
@@ -57,7 +57,9 @@ export const updateProductWithImages = () =>
         })
       );
     }
-    await req.dbQuery;
+    await productModel
+      .updateOne({}, req.body)
+      .where({ slug: req.params.productSlug });
     res.json({
       message: `updated product with ${req.files.images?.length} images`,
     });
