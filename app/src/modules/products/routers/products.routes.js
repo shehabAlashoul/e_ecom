@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { attachAddQuery, attachDeleteQuery, attachFindQuery, attachUpdateQuery } from '../../../../middlewares/query.middleware.js'
+import { attachDeleteQuery, attachFindQuery, attachUpdateQuery } from '../../../../middlewares/query.middleware.js'
 import { filterOne, filterQuery, paginateQuery, searchQuery, selectFieldsQuery, sortQuery } from '../../../../middlewares/features.middleware.js'
 import productModel from '../models/product.model.js'
 import { executeQuery } from '../../../../handlers/execute.handler.js'
@@ -33,7 +33,6 @@ router
 		upload.fields([{name:'cover_image',maxCount:1},{name:'images',maxCount:10}]),
 		validate(addProductSchema),
 		attachCoverImage(),
-		attachAddQuery(productModel),
 		addProductWithImages()
 	)
 
