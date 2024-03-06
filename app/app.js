@@ -12,16 +12,17 @@ const application = (app) => {
 
   app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'];
-  
+    console.log('A');
     let event;
   
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+      console.log('B');
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
-  
+    console.log('C');
     // Handle the event
     switch (event.type) {
       case 'checkout.session.completed':
@@ -33,7 +34,7 @@ const application = (app) => {
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
-  
+    console.log('D');
     // Return a 200 response to acknowledge receipt of the event
     response.send();
   });
