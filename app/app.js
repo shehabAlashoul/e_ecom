@@ -17,6 +17,7 @@ const application = (app) => {
       const sig = request.headers["stripe-signature"];
 
       let event;
+      console.log('shosho fffffffff');
 
       try {
         event = stripe.webhooks.constructEvent(
@@ -28,8 +29,6 @@ const application = (app) => {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
       }
-      console.log('shosho fffffffff');
-      // Handle the event
       switch (event.type) {
         case "checkout.session.completed":
           const data = event.data.object;
