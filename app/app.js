@@ -7,8 +7,8 @@ import connectToDB from "./dataBase/conection.js";
 import appRouter from "./app.routes.js";
 import { AppError } from "./utils/error.handler.js";
 
+dotenv.config();
 const application = (app) => {
-  dotenv.config();
 
   app.post(
     "/webhook",
