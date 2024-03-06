@@ -44,7 +44,7 @@ const application = (app) => {
     }
   );
 
-  app.listen(4242, () => console.log("Running on port 4242"));
+  // app.listen(4242, () => console.log("Running on port 4242"));
   app.use(express.json());
   connectToDB();
   app.use(morgan("dev"));
