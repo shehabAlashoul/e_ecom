@@ -6,25 +6,8 @@ import productModel from "../models/product.model.js";
 
 export const addProductWithImages = () =>
   catchAsyncError(async (req, res, next) => {
-    console.log(req.body);
-    const {
-      title,
-      description,
-      stock,
-      price,
-      discounted_price,
-      subcategory_id,
-      key,
-      value,
-    } = req.body;
     const product = await productModel.create({
-      title,
-      description,
-      stock,
-      price,
-      discounted_price,
-      subcategory_id,
-      features: [],
+     ...req.body,
       created_by: req.user._id,
     });
     if (req.files?.images)

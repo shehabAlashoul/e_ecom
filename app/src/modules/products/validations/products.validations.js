@@ -8,7 +8,7 @@ export const addProductSchema = Joi.object({
 		price: Joi.number().min(0.01).required(),
 		discounted_price: Joi.number().min(0.01).required(),
 		features: Joi.array().items(
-			Joi.object({
+			Joi.object().keys({
 				key: Joi.string().required(),
 				value: Joi.string().required()
 			})
