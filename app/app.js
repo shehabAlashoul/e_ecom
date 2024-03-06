@@ -12,7 +12,7 @@ const application = (app) => {
 
   connectToDB();
   app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
-    const sig = request.headers['stripe-signature'];
+    const sig = request.headers['stripe-signature'].toString();
     console.log('A');
     let event;
   
