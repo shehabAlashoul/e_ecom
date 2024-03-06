@@ -1,6 +1,6 @@
+import Stripe from "stripe";
 import { ApiFeatures } from "../../../../utils/apiFeatures.js";
 import { AppError, catchAsyncError } from "../../../../utils/error.handler.js";
-import { stripeSession } from "../../../../utils/onlinePayment.js";
 import productModel from "../../products/models/product.model.js";
 import cartModel from "../models/cart.model.js";
 import orderModel from "../models/order.model.js";
@@ -62,7 +62,27 @@ export const makePaymentSession = catchAsyncError(async (req, res) => {
     const cancel_url = req.header('cancel_url')
     const {user_email,user_name} = req.user
     const {_id,total_price} = await cartModel.findOne({user_id: req.user._id})
-    const session = await stripeSession(total_price,user_name,_id,user_email,success_url,cancel_url)
-    console.log('aaaaaaaaaaaaaaaaaaaa');
+    dotenv.config()
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+ const session = await stripe.checkout.sessions.create({
+        line_items:[
+            {
+                price_data:{
+                    currency:'EGP',
+                    unit_amount: total_price * 100,
+                    product_data:{
+                        name:user_name
+                    }
+                },
+                quantity:1,
+            }
+        ],
+        mode:'payment',
+        success_url,
+        cancel_url,
+        client_reference_id: _id,
+        customer_email: user_email
+    })
+
     res.json({session})
 })
