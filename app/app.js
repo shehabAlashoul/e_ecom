@@ -10,6 +10,7 @@ import { AppError } from "./utils/error.handler.js";
 dotenv.config();
 const application = (app) => {
 
+  connectToDB();
   app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'];
     console.log('A');
@@ -38,10 +39,9 @@ const application = (app) => {
     // Return a 200 response to acknowledge receipt of the event
     response.send();
   });
-
+  
   // app.listen(4242, () => console.log("Running on port 4242"));
   app.use(express.json());
-  connectToDB();
   app.use(morgan("dev"));
   app.use("/ecom", appRouter);
   // _________________________________________ cloudnairy config ____________________________________________
