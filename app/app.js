@@ -28,7 +28,7 @@ const application = (app) => {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
       }
-
+      console.log('shosho fffffffff');
       // Handle the event
       switch (event.type) {
         case "checkout.session.completed":
