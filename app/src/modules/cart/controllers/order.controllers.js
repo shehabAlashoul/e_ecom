@@ -63,5 +63,6 @@ export const makePaymentSession = catchAsyncError(async (req, res) => {
     const {user_email,user_name} = req.user
     const {_id,total_price} = await cartModel.findOne({user_id: req.user._id})
     const session = await stripeSession(total_price,user_name,_id,user_email,success_url,cancel_url)
+    console.log('aaaaaaaaaaaaaaaaaaaa');
     res.json({session})
 })
