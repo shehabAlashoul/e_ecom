@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import stripe from "stripe";
+import Stripe from "stripe";
 import express from "express";
 import morgan from "morgan";
 import { v2 as cloudinary } from "cloudinary";
@@ -13,6 +13,7 @@ const application = (app) => {
   connectToDB();
   app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
     const sig = request.headers['stripe-signature'].toString();
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
     console.log('A');
     let event;
   
